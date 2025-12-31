@@ -5,11 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> main
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.lang.reflect.InvocationTargetException;
 

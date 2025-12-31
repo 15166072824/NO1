@@ -72,9 +72,17 @@
 								{{scope.row.shangbanshijian}}
 							</template>
 						</el-table-column>
-						<el-table-column label="上班时长\小时" :resizable='true' align="left" header-align="left">
+						<el-table-column label="上班时长\\小时" :resizable='true' align="left" header-align="left">
 							<template #default="scope">
 								{{scope.row.shangbanshizhang}}
+							</template>
+						</el-table-column>
+						<el-table-column label="实际工作时长" :resizable='true' align="left" header-align="left">
+							<template #default="scope">
+								<span v-if="getActualWorkDuration(scope.row)" style="color: #67C23A; font-weight: bold;">
+									{{getActualWorkDuration(scope.row)}}
+								</span>
+								<span v-else style="color: #909399;">暂无数据</span>
 							</template>
 						</el-table-column>
 						<el-table-column label="休假时间" :resizable='true' align="left" header-align="left">
@@ -241,6 +249,40 @@
             await store.dispatch("user/getSession")
         }
 		getList()
+	}
+	// 获取实际工作时长
+	const getActualWorkDuration = (row) => {
+		if (!row.yishengzhanghao || !row.shangbanshijian) return null
+		
+		const shangbanDate = new Date(row.shangbanshijian)
+		const today = shangbanDate.toISOString().split('T')[0]
+		
+		// 调用API获取当天的打卡记录
+		context?.$http({
+			url: 'dakaqiandao/list',
+			method: 'get',
+			params: {
+				yishengzhanghao: row.yishengzhanghao,
+				riqi: today,
+				dakazhuangtai: '下班',
+				limit: 1
+			}
+		}).then(res => {
+			if (res.data.code === 0 && res.data.data.list.length > 0) {
+				const dakaRecord = res.data.data.list[0]
+				if (dakaRecord.gongzuoshichang) {
+					const hours = Math.floor(dakaRecord.gongzuoshichang / 60)
+					const minutes = dakaRecord.gongzuoshichang % 60
+					return hours > 0 ? `${hours}小时${minutes}分钟` : `${minutes}分钟`
+				}
+			}
+			return null
+		}).catch(() => {
+			return null
+		})
+		
+		// 返回同步的计算结果
+		return '计算中...'
 	}
 	init()
 </script>

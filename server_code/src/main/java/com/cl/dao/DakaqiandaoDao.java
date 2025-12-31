@@ -1,0 +1,32 @@
+package com.cl.dao;
+
+import com.cl.entity.DakaqiandaoEntity;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import java.util.List;
+import java.util.Map;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+
+import org.apache.ibatis.annotations.Param;
+import com.cl.entity.view.DakaqiandaoView;
+
+/**
+ * 医生打卡签到
+ * 
+ * @author 
+ * @email 
+ * @date 2025-03-27 15:44:15
+ */
+public interface DakaqiandaoDao extends BaseMapper<DakaqiandaoEntity> {
+	
+	List<DakaqiandaoView> selectListView(@Param("ew") Wrapper<DakaqiandaoEntity> wrapper);
+
+	List<DakaqiandaoView> selectListView(Pagination page,@Param("ew") Wrapper<DakaqiandaoEntity> wrapper);
+	
+	DakaqiandaoView selectView(@Param("ew") Wrapper<DakaqiandaoEntity> wrapper);
+	
+	List<DakaqiandaoView> selectListView2(Map<String,Object> params);
+	
+	List<Map<String, Object>> selectDakaTongji(Map<String, Object> params);
+
+}
