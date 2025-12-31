@@ -51,6 +51,7 @@ import chatMessageAdd from '@/views/pages/chatMessage/formAdd'
 import chatFriendList from '@/views/pages/chatFriend/list'
 import chatFriendDetail from '@/views/pages/chatFriend/formModel'
 import chatFriendAdd from '@/views/pages/chatFriend/formAdd'
+import dakaqiandaoList from '@/views/pages/dakaqiandao/list'
 
 const routes = [{
 		path: '/',
@@ -224,6 +225,10 @@ const routes = [{
 		}, {
 			path: 'chatFriendAdd',
 			component: chatFriendAdd
+		}
+		, {
+			path: 'dakaqiandaoList',
+			component: dakaqiandaoList
 		}
 		]
 	},
